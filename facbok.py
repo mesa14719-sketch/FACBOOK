@@ -33,7 +33,7 @@ if not tok or not id:
 ibra = "qwertyuioplkjhgfdsamnbvcxz"
 
 while True:
-	len = random.randint(3,7)
+	len = random.randint(3,6)
 	
 	email ="".join(random.choice(ibra) for _ in range (len)) + "@yopmail.com"
 
