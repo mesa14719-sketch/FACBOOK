@@ -31,6 +31,7 @@ ibra = "qwertyuiopasdfghjklmnbvcxzm"
 
 
 while True:
+	sleep(1)
 	len = random.randint(3,5)
 	email ="".join(random.choice(ibra) for _ in range(len)) + "@yopmail.com"
 	
