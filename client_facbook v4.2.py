@@ -1,29 +1,27 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-  dacbook_v.4 - Client
-  2026-09-14 16:44:52
-"""
+
 
 import requests
-import sys
+import sys,os
 import time
+from time import sleep
 
 SERVER_URL = "http://server-3-mzac.onrender.com"
-TOOL_ID = "facbook_v.4"
-LICENSE_KEY = "FACBOOK_-UHCB5D54313OU7R8LPQ6YVC0ELFJZ6X3"
-TOOL_NAME = "dacbook_v.4"
-INPUTS_PROMPTS = ['? Token :', '? id :']
+TOOL_ID = "facbok_4.5"
+LICENSE_KEY = "FACBOK_4-0WIC253B2GQ7NLKGJJCBEBPMXIOTU98V"
+TOOL_NAME = "facbook_v4.5"
+INPUTS_PROMPTS = [' [ TOKEN ] ', '[ id ] ']
 
 
 def print_banner():
-    print("=" * 60)
-    print(f"  🛠️  {TOOL_NAME}")
-    print("=" * 60)
+    print("")
+    print(f"  Developer :  @I_Z_E_E 💻 ")
+    print("")
 
 
 def verify_license():
-    print("\n🔐 جاري جلب الترخيص من السرفر...")
+    print("  waiting Github run... 🌐")
+    sleep(1)
+    os.system("clear")
     try:
         response = requests.post(
             f"{SERVER_URL}/verify_license",
@@ -32,10 +30,8 @@ def verify_license():
         )
         if response.status_code == 200:
             data = response.json()
-            print(f"✅ تم التحقق من الترخيص")
-            print(f"🏷️  الأداة: {data.get('tool_name', TOOL_NAME)}")
-            if data.get('updated_at'):
-                print(f"📅 آخر تحديث: {data['updated_at'][:19]}")
+            print("")
+            
             return True
         else:
             try:
@@ -52,13 +48,12 @@ def verify_license():
 def collect_inputs():
     if not INPUTS_PROMPTS:
         return ""
-    print(f"\n📝 الأداة تحتاج {len(INPUTS_PROMPTS)} مدخل(ات):")
-    print("-" * 60)
+    
     values = []
     for i, prompt in enumerate(INPUTS_PROMPTS, 1):
         clean_prompt = prompt.strip() or f"مدخل #{i}"
         try:
-            value = input(f"{i}. {clean_prompt}: ")
+            value = input(f"{i} {clean_prompt}:")
         except EOFError:
             value = ""
         values.append(value)
@@ -96,7 +91,7 @@ def stream_output(job_id):
     since = 0
     start_time = time.time()
     print()
-    print("=" * 60)
+    
 
     while True:
         try:
@@ -130,7 +125,7 @@ def stream_output(job_id):
                 if status in ("pending", "running"):
                     elapsed = int(time.time() - start_time)
                     if elapsed > 0 and elapsed % 5 == 0 and not new_lines:
-                        sys.stdout.write(f"\r⏳ جاري التنفيذ... ({elapsed}ث)   ")
+                        sys.stdout.write(f"\r Github run ✅ ")
                         sys.stdout.flush()
 
             time.sleep(1.5)
@@ -146,8 +141,7 @@ def stream_output(job_id):
 
 def main():
     print_banner()
-    print(f"📡 السرفر: {SERVER_URL}")
-    print("-" * 60)
+    
 
     if not verify_license():
         print("\n❌ فشل التحقق من الترخيص")
@@ -156,7 +150,9 @@ def main():
     stdin_input = collect_inputs()
     args = sys.argv[1:] if len(sys.argv) > 1 else []
 
-    print(f"\n📤 إرسال الطلب للسرفر...")
+    print(f"\n Github run ✅")
+    sleep(1)
+    os.system("clear")
     job_id = start_execution(args, stdin_input)
     if not job_id:
         print("❌ فشل بدء التنفيذ")
